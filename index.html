@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maracatech – cultura e tecnologia lado a lado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#eef3ff; --ink:#12163a; --card:#ffffff; --muted:#4b5178; --hero:#12163a; --hero-ink:#fff6e0;
+  --red:#e63946; --sun:#ffbe0b; --green:#0f9d58; --blue:#1d4ed8; --pink:#ff4d8d;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){color-scheme:dark;--bg:#0d1030;--ink:#fff6e0;--card:#1a1e4d;--muted:#b7bce6;--hero:#080a22;--hero-ink:#fff6e0}
+}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0d1030;--ink:#fff6e0;--card:#1a1e4d;--muted:#b7bce6;--hero:#080a22;--hero-ink:#fff6e0}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--hero);z-index:10}
+h1,h2,h3{font-family:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;line-height:1.08;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--hero);color:var(--hero-ink);display:flex;align-items:center;gap:20px;padding:12px 20px}
+.brand{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.25rem;text-decoration:none;flex:0 0 auto}
+nav{display:flex;gap:6px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+nav a{text-decoration:none;padding:6px 12px;border-radius:99px;font-weight:500;font-size:.95rem}
+nav a:hover{background:rgba(255,246,224,.14)}
+.flags{display:flex;overflow:hidden;height:30px;background:var(--hero)}
+.flags i{flex:0 0 34px;height:30px;clip-path:polygon(0 0,100% 0,50% 100%)}
+.hero{background:var(--hero);color:var(--hero-ink);padding:36px 20px 56px}
+.wrap{max-width:1040px;margin:0 auto}
+.hero .wrap{display:grid;gap:32px;align-items:center}
+@media (min-width:760px){.hero .wrap{grid-template-columns:1.2fr .8fr}}
+.hero h1{font-size:clamp(2.6rem,9vw,5rem);font-weight:800}
+.hero p{max-width:46ch;font-size:1.15rem;margin:18px 0 0}
+.tag{display:inline-block;margin-top:22px;padding:6px 14px;border-radius:99px;background:var(--sun);color:#12163a;font-weight:700;font-size:.95rem}
+.sombrinha{justify-self:center;width:min(300px,80vw);animation:abrir 1.1s cubic-bezier(.2,.8,.2,1) both}
+.sombrinha .copa{height:150px;border-radius:300px 300px 0 0;background:conic-gradient(from 270deg at 50% 100%,var(--red) 0 36deg,var(--sun) 0 72deg,var(--green) 0 108deg,var(--blue) 0 144deg,var(--pink) 0 180deg)}
+.sombrinha .barra{width:6px;height:130px;margin:0 auto;background:var(--hero-ink);border-radius:3px}
+.sombrinha .gancho{width:34px;height:26px;margin:-4px auto 0 calc(50% - 31px);border:6px solid var(--hero-ink);border-top:0;border-radius:0 0 30px 30px}
+@keyframes abrir{from{transform:scale(.4) rotate(-14deg);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.sombrinha{animation:none}html{scroll-behavior:auto}}
+section{padding:60px 20px}
+section h2{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;margin-bottom:10px}
+.lead{max-width:60ch;color:var(--muted);margin:0 0 28px}
+.grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{background:var(--card);border:2.5px solid var(--ink);border-radius:6px;padding:20px;box-shadow:6px 6px 0 var(--c,var(--red))}
+.card h3{font-size:1.3rem;margin-bottom:8px}
+.card p{margin:0;color:var(--muted)}
+.soon{display:inline-block;margin-top:14px;font-size:.85rem;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--c,var(--red));color:#12163a}
+.destaque{background:var(--sun);color:#12163a;border:2.5px solid #12163a;border-radius:6px;padding:22px;box-shadow:6px 6px 0 var(--red);max-width:620px}
+.destaque h3{font-size:1.5rem;margin-bottom:6px}
+.destaque p{margin:0}
+.alt{background:var(--card)}
+.sobre{display:grid;gap:28px}
+@media (min-width:760px){.sobre{grid-template-columns:1.3fr 1fr}}
+.pilares{display:grid;gap:12px}
+.pilares div{border-left:10px solid var(--c);padding:6px 14px;background:var(--bg);font-weight:700}
+.pilares span{display:block;font-weight:400;color:var(--muted);font-size:.95rem}
+.trilha{counter-reset:p;display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.trilha .card::before{counter-increment:p;content:counter(p);display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--c);color:#12163a;font:800 1.2rem "Bricolage Grotesque",sans-serif;margin-bottom:12px}
+.cta{display:inline-block;margin-top:8px;padding:14px 26px;background:var(--red);color:#fff;font-weight:700;text-decoration:none;border:2.5px solid var(--ink);border-radius:6px;box-shadow:5px 5px 0 var(--ink)}
+.cta:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink)}
+.artigo{margin-top:34px;max-width:680px;background:var(--card);border:2.5px solid var(--ink);border-radius:6px;padding:24px;box-shadow:6px 6px 0 var(--sun)}
+.artigo h3{font-size:1.8rem;margin-bottom:6px}
+.artigo p{margin:14px 0 0}
+.artigo .sub{color:var(--muted);font-weight:500;margin-top:0}
+.pensar{margin-top:20px;padding:14px 16px;background:var(--bg);border-left:10px solid var(--red)}
+.pensar ul{margin:6px 0 0;padding-left:20px}
+button.soon{border:0;font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
+.artigo[hidden]{display:none}
+footer{background:var(--hero);color:var(--hero-ink);text-align:center;padding:0 20px 28px}
+footer p{margin:18px 0 0;font-size:.95rem}
+
+/* Cores oficiais do AGC + logo */
+:root{--bg:#FFF4E3;--ink:#1A1A1A;--card:#FFFFFF;--muted:#4A4A4A;--hero:#1A1A1A;--hero-ink:#FFF4E3;--dark:#1A1A1A;
+  --red:#F58220;--sun:#FFC72C;--green:#F9A04F;--blue:#FFD98A;--pink:#FDBE8A;--logo:url("data:image/png;base64,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")}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--ink:#FFF4E3;--card:#222222;--muted:#D2C9BC;--hero:#0C0C0C;--hero-ink:#FFF4E3}}
+:root[data-theme="dark"]{--bg:#141414;--ink:#FFF4E3;--card:#222222;--muted:#D2C9BC;--hero:#0C0C0C;--hero-ink:#FFF4E3}
+.tag,.soon,.destaque,.cta{color:var(--dark)}
+.destaque{border-color:var(--dark)}
+.trilha .card::before{color:var(--dark)}
+.logo{display:block;aspect-ratio:1/1;background:var(--logo) center/contain no-repeat}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .logo{width:38px;flex:0 0 38px}
+.logo-hero{width:min(300px,70vw);justify-self:center;animation:abrir 1.1s cubic-bezier(.2,.8,.2,1) both}
+@media (prefers-reduced-motion:reduce){.logo-hero{animation:none}}
+.filtros{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+.chip{border:2px solid var(--ink);background:var(--card);color:var(--ink);font:700 .9rem "DM Sans",system-ui,sans-serif;padding:6px 14px;border-radius:99px;cursor:pointer}
+.chip.on{background:var(--sun);color:var(--dark)}
+.lugares{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:14px}
+.lugares li{border-left:10px solid var(--c,var(--red));background:var(--bg);padding:10px 14px}
+.lugares li[hidden]{display:none}
+.lugares strong{font-family:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;font-size:1.15rem}
+.lugares .onde{display:block;color:var(--muted);font-size:.9rem}
+.lugares p{margin:6px 0 8px}
+.lugares a{font-weight:700}
+.nota{color:var(--muted)}
+.registros{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:14px}
+.registros li{border-left:10px solid var(--c,var(--red));background:var(--bg);padding:10px 14px}
+.registros strong{font-family:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;font-size:1.15rem}
+.registros .onde{display:block;color:var(--muted);font-size:.9rem}
+.registros p{margin:6px 0 0}
+.reg{margin-top:12px;border-left:10px solid var(--blue);background:var(--bg);padding:10px 14px}
+.reg summary{cursor:pointer;font-family:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;font-weight:800;font-size:1.2rem}
+.reg summary .onde{display:block;font:400 .9rem "DM Sans",system-ui,sans-serif;color:var(--muted)}
+.reg .pensar{background:var(--card)}
+.lab{max-width:none;background:var(--hero);color:var(--hero-ink);border-color:var(--sun);box-shadow:8px 8px 0 var(--red)}
+.lab .sub{color:var(--hero-ink);opacity:.85}
+.lab .nota{color:var(--hero-ink);opacity:.8}
+.lab .cta{border-color:var(--hero-ink);box-shadow:5px 5px 0 var(--hero-ink)}
+.seqrow{margin-top:14px}
+.seqrow b{display:block;margin-bottom:6px}
+.seqrow b span{font-weight:400;opacity:.75}
+.pads{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
+@media (min-width:760px){.pads{grid-template-columns:repeat(16,1fr)}}
+.pad{aspect-ratio:1/1;min-height:34px;border:0;border-radius:6px;background:rgba(255,244,227,.16);cursor:pointer;padding:0}
+.pad[aria-pressed="true"]{background:var(--c)}
+.pad.now{outline:3px solid var(--hero-ink);outline-offset:1px}
+.ctrl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:20px}
+.ctrl label{display:flex;align-items:center;gap:8px;font-weight:700}
+.ctrl input[type=range]{accent-color:var(--sun)}
+.lab ol{padding-left:22px}
+.lab hr{border:0;border-top:2px dashed rgba(255,244,227,.3);margin:28px 0 20px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.ech{border:2px solid var(--hero-ink);background:transparent;color:var(--hero-ink);font:700 .9rem 'DM Sans',system-ui,sans-serif;padding:6px 12px;border-radius:99px;cursor:pointer}
+.ech[aria-pressed='true']{background:var(--sun);color:var(--dark);border-color:var(--sun)}
+.ech.sw{width:36px;height:36px;padding:0;border-radius:50%}
+.ech.sw[aria-pressed='true']{border-color:var(--hero-ink);outline:3px solid var(--sun);outline-offset:2px}
+.est-grids{display:flex;flex-wrap:wrap;gap:18px;margin-top:16px}
+.est-grids>div{flex:1 1 220px;max-width:320px}
+.est-grids .mini{margin:0 0 6px;font-weight:700}
+.est-edit{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;background:rgba(255,244,227,.25);padding:3px;border-radius:6px}
+.estc{padding:0;border:0;background:none;cursor:pointer;line-height:0}
+.estc svg,#est-prev svg{width:100%;height:auto;display:block}
+#est-prev{border-radius:6px;overflow:hidden;line-height:0}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="#inicio"><span class="logo" role="img" aria-label="Logo do Agenda da Cultura"></span>Maracatech</a>
+  <nav aria-label="Seções">
+    <a href="#sobre">Sobre</a><a href="#cultura-em-rede">Cultura em Rede</a><a href="#projetos">Projetos</a><a href="#fotografia">Fotografia</a><a href="#participe">Participe</a>
+  </nav>
+</header>
+<div class="flags" aria-hidden="true"></div>
+
+<main>
+<div class="hero" id="inicio">
+  <div class="wrap">
+    <div>
+      <h1>Cultura e tecnologia, lado a lado.</h1>
+      <p>Do baque do maracatu ao código: um espaço para ver como a tradição se reinventa quando encontra a tecnologia.</p>
+      <span class="tag">Para quem tem 14 anos ou mais</span>
+    </div>
+    <div class="logo logo-hero" role="img" aria-label="Logo do Agenda da Cultura"></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="destaque">
+      <h3>Em destaque: Laboratório criativo</h3>
+      <p>Monte um ritmo de tambor, crie uma estampa com as cores do Agenda da Cultura e deixe um algoritmo sugerir ideias novas. Tudo no seu celular.</p>
+      <button class="soon" id="destaque-lab" style="--c:var(--dark);color:#FFF4E3;margin-top:12px">Abrir o laboratório</button>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="sobre">
+  <div class="wrap sobre">
+    <div>
+      <h2>O que é o Maracatech</h2>
+      <p>O Maracatech nasceu de uma ideia simples: cultura e tecnologia não precisam andar separadas. Aqui a gente mostra, ensina e conecta quem quer usar o digital a favor da sua cultura.</p>
+      <p>É um espaço aberto para jovens, estudantes, artistas e curiosos que querem aprender fazendo.</p>
+      <h3 style="font-size:1.4rem;margin:26px 0 6px">Quem faz</h3>
+      <p>O Maracatech é uma plataforma do <strong>Agenda da Cultura</strong>, projeto de comunicação cultural com foco em Olinda, Recife e Pernambuco.</p>
+      <p>Foi criado por <strong>Joãozinho Xambá</strong>, artista cultural e fotógrafo que atua com música, educação popular e audiovisual. É monitor do Bongarbit e integra o coletivo Erê Sankofa.</p>
+    </div>
+    <div class="pilares">
+      <div style="--c:var(--red)">Raiz<span>Respeito às tradições e a quem as mantém vivas.</span></div>
+      <div style="--c:var(--sun)">Rede<span>Gente conectada trocando saberes.</span></div>
+      <div style="--c:var(--blue)">Futuro<span>Ferramentas novas para contar histórias antigas.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cultura-em-rede">
+  <div class="wrap">
+    <h2>Cultura em Rede</h2>
+    <p class="lead">Conteúdos curtos e diretos sobre como a tecnologia se junta às tradições.</p>
+    <div class="grid">
+      <article class="card" style="--c:var(--sun)"><h3>Tambor e algoritmo</h3><p>Como a tecnologia ajuda a registrar e espalhar ritmos e tradições.</p><button class="soon" style="--c:var(--sun)" data-alvo="tambor-e-algoritmo" aria-expanded="false" aria-controls="tambor-e-algoritmo">Ler agora</button></article>
+      <article class="card" style="--c:var(--green)"><h3>Cultura no celular</h3><p>Fotografar, gravar e editar: ferramentas simples para contar a sua história.</p><button class="soon" style="--c:var(--green)" data-alvo="cultura-no-celular" aria-expanded="false" aria-controls="cultura-no-celular">Ler agora</button></article>
+      <article class="card" style="--c:var(--pink)"><h3>Memória digital</h3><p>Guardar saberes populares para que eles não se percam.</p><button class="soon" style="--c:var(--pink)" data-alvo="memoria-digital" aria-expanded="false" aria-controls="memoria-digital">Ler agora</button></article>
+    </div>
+    <article class="artigo" id="tambor-e-algoritmo" hidden>
+      <h3>Tambor e algoritmo</h3>
+      <p class="sub">O que o maracatu e o código têm em comum? Os dois são feitos de padrões que passam de mão em mão.</p>
+      <p>O maracatu nação nasceu em Pernambuco e é um dos ritmos afro-brasileiros mais antigos. Ele vive no corpo e na repetição: quem aprende escuta, imita e toca ao lado do mestre, sem manual.</p>
+      <p>Um algoritmo também é um padrão: uma sequência de passos repetida até funcionar. Quando o grupo toca as alfaias, cada batida entra no tempo certo e sustenta a outra. Entender essa lógica ajuda a olhar para a música e para a tecnologia com os mesmos olhos.</p>
+      <p>A tecnologia entra para registrar e espalhar. Gravar um ensaio, filmar uma toada, guardar fotos e partituras antigas: existe, por exemplo, um projeto para digitalizar partituras manuscritas de frevo do início do século XX, do Capitão Zuzinha.</p>
+      <p>Mas tecnologia não é neutra. Uma pesquisa de 2026 sobre uma residência em Recife, em que músicos e dançarinos de frevo e de tradições afro-brasileiras testaram um instrumento digital vestível, mostrou que o digital não entra na tradição como uma ferramenta qualquer: ele é negociado com o corpo, com os costumes e com a vontade de tocar ao vivo.</p>
+      <div class="pensar"><strong>Para pensar</strong>
+        <ul><li>O que da cultura da sua rua você gostaria de registrar?</li><li>Quem precisa autorizar esse registro?</li><li>Onde ele ficaria guardado?</li></ul>
+      </div>
+      <button class="soon" style="--c:var(--sun);margin-top:18px" data-alvo="tambor-e-algoritmo">Fechar texto</button>
+    </article>
+    <article class="artigo" id="cultura-no-celular" hidden style="box-shadow:6px 6px 0 var(--green)">
+      <h3>Cultura no celular</h3>
+      <p class="sub">Você já tem no bolso um estúdio de foto, áudio e vídeo. O segredo é saber o que registrar e como.</p>
+      <p>Registrar a cultura não exige equipamento caro. Um celular, atenção e respeito já bastam para guardar um ensaio de maracatu, a feira do bairro ou a história de uma pessoa mais velha.</p>
+      <p><strong>Fotografar.</strong> Procure a luz antes do assunto: a da manhã e a do fim da tarde é mais macia. Chegue perto em vez de usar o zoom digital e deixe o fundo ajudar a contar o lugar.</p>
+      <p><strong>Gravar.</strong> O som importa tanto quanto a imagem. Fique perto de quem fala ou toca, fuja do vento e grave um minuto do som do ambiente, que ajuda a montar o vídeo depois.</p>
+      <p><strong>Editar.</strong> Menos é mais: ajuste a luz, corte o que sobrar e mantenha as cores fiéis ao que você viu. Apps gratuitos de edição dão conta do recado.</p>
+      <div class="pensar"><strong>Antes de publicar</strong>
+        <ul><li>Peça autorização a quem aparece, principalmente em fotos de perto.</li><li>Se a pessoa tiver menos de 18 anos, peça também a autorização de um responsável.</li><li>Cite quem faz a cultura: o nome do grupo, da mestra ou do mestre.</li><li>Guarde o original em dois lugares.</li></ul>
+      </div>
+      <p>Desafio: nesta semana, registre três coisas da sua rua, uma imagem, um som e uma fala.</p>
+      <button class="soon" style="--c:var(--green);margin-top:18px" data-alvo="cultura-no-celular">Fechar texto</button>
+    </article>
+    <article class="artigo" id="memoria-digital" hidden style="box-shadow:6px 6px 0 var(--pink)">
+      <h3>Memória digital</h3>
+      <p class="sub">Cultura que só vive na memória de quem a pratica pode se perder. O digital ajuda a guardar, desde que seja feito com cuidado e com respeito.</p>
+      <p>Memória cultural é tudo o que um grupo guarda para saber quem é: histórias, músicas, toques de tambor, receitas, festas, fotos de família, objetos. Boa parte dela não está em livros. Vive na voz e no corpo de quem faz, e por isso é chamada de patrimônio imaterial.</p>
+      <p>No Brasil, o IPHAN reconhece essas expressões como Patrimônio Cultural. Em 2014, o Maracatu Nação, o Maracatu de Baque Solto e o Cavalo-Marinho receberam esse título, a pedido da Secretaria de Cultura de Pernambuco. O frevo também é patrimônio imaterial, inclusive em nível internacional. O título protege e dá visibilidade, mas quem mantém a tradição viva continua sendo quem a pratica.</p>
+      <p>O digital entra como aliado. Um áudio gravado no celular, uma foto antiga escaneada, o vídeo de um ensaio: tudo isso pode virar acervo. Quando uma mestra ou um mestre conta uma história e ela é gravada, o que estava na memória de uma pessoa passa a poder ser ouvido por muitas outras, por muito tempo.</p>
+      <p><strong>Como guardar bem</strong></p>
+      <ol style="margin:8px 0 0;padding-left:22px">
+        <li><strong>Registre com contexto.</strong> Anote quem é a pessoa, o nome do grupo ou da festa, o lugar e a data. Sem isso, a foto ou o áudio perde boa parte do sentido.</li>
+        <li><strong>Peça autorização.</strong> Explique para que o material vai ser usado e registre o “sim” por escrito ou em áudio. Para menores de 18 anos, peça também ao responsável.</li>
+        <li><strong>Dê nomes claros aos arquivos.</strong> Algo como 2026-11-maracatu-ensaio-olinda-01 ajuda a achar tudo depois.</li>
+        <li><strong>Guarde em mais de um lugar.</strong> Por exemplo: no celular, num HD ou pendrive e num serviço de nuvem. Se um falhar, os outros salvam.</li>
+        <li><strong>Devolva para a comunidade.</strong> Mostre o resultado a quem foi registrado. A memória é deles antes de ser sua.</li>
+      </ol>
+      <div class="pensar" style="border-left-color:var(--pink)"><strong>Nem tudo é para divulgar</strong>
+        <p style="margin:6px 0 0">Alguns saberes e rituais são reservados, principalmente em tradições de matriz africana. Pergunte o que pode ser registrado e o que pode ser publicado, e respeite o que for pedido para ficar de fora.</p>
+      </div>
+      <p>Desafio: escolha uma pessoa mais velha da sua família ou do seu bairro e, com autorização, grave 5 minutos de conversa sobre uma tradição que ela viveu.</p>
+      <button class="soon" style="--c:var(--pink);margin-top:18px" data-alvo="memoria-digital">Fechar texto</button>
+    </article>
+  </div>
+</section>
+
+<section class="alt" id="projetos">
+  <div class="wrap">
+    <h2>Projetos</h2>
+    <p class="lead">Iniciativas que unem arte, cultura e tecnologia.</p>
+    <div class="grid">
+      <article class="card" style="--c:var(--blue)"><h3>Mapa cultural</h3><p>Grupos, espaços e fazedores de cultura reunidos num só lugar.</p><button class="soon" style="--c:var(--blue)" data-alvo="mapa-cultural" data-abrir="Abrir o mapa" data-fechar="Fechar o mapa" aria-expanded="false" aria-controls="mapa-cultural">Abrir o mapa</button></article>
+      <article class="card" style="--c:var(--red)"><h3>Acervo vivo</h3><p>Fotos, sons e vídeos que contam a história de quem faz cultura.</p><button class="soon" style="--c:var(--red)" data-alvo="acervo-vivo" data-abrir="Abrir o acervo" data-fechar="Fechar o acervo" aria-expanded="false" aria-controls="acervo-vivo">Abrir o acervo</button></article>
+      <article class="card" style="--c:var(--sun)"><h3>Laboratório criativo</h3><p>Experimentos que misturam arte e tecnologia, feitos em grupo.</p><button class="soon" style="--c:var(--sun)" data-alvo="laboratorio-criativo" data-abrir="Abrir o laboratório" data-fechar="Fechar o laboratório" aria-expanded="false" aria-controls="laboratorio-criativo">Abrir o laboratório</button></article>
+    </div>
+    <article class="artigo" id="mapa-cultural" hidden style="box-shadow:6px 6px 0 var(--red)">
+      <h3>Mapa cultural</h3>
+      <p class="sub">Grupos, espaços e territórios de cultura de Pernambuco num só lugar. Escolha um filtro e toque em “Ver no mapa” para chegar até lá.</p>
+      <div class="filtros" role="group" aria-label="Filtros do mapa">
+        <button class="chip on" data-f="todos" aria-pressed="true">Todos</button>
+        <button class="chip" data-f="espaco" aria-pressed="false">Espaços</button>
+        <button class="chip" data-f="grupo" aria-pressed="false">Grupos</button>
+        <button class="chip" data-f="territorio" aria-pressed="false">Territórios</button>
+      </div>
+      <ul class="lugares">
+        <li data-t="espaco" style="--c:var(--red)"><strong>Paço do Frevo</strong><span class="onde">Espaço · Recife Antigo, Recife</span><p>Museu dedicado ao frevo, expressão reconhecida como patrimônio cultural imaterial do Brasil.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Pa%C3%A7o+do+Frevo+Recife" target="_blank" rel="noopener">Ver no mapa</a></li>
+        <li data-t="espaco" style="--c:var(--red)"><strong>Cais do Sertão</strong><span class="onde">Espaço · Recife Antigo, Recife</span><p>Museu sobre a cultura do sertão nordestino e a obra de Luiz Gonzaga.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Cais+do+Sert%C3%A3o+Recife" target="_blank" rel="noopener">Ver no mapa</a></li>
+        <li data-t="espaco" style="--c:var(--red)"><strong>Mercado da Ribeira</strong><span class="onde">Espaço · Centro histórico, Olinda</span><p>Mercado histórico de Olinda que hoje abriga ateliês e lojas de artesanato.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Mercado+da+Ribeira+Olinda" target="_blank" rel="noopener">Ver no mapa</a></li>
+        <li data-t="grupo" style="--c:var(--sun)"><strong>Maracatu Estrela Brilhante do Recife</strong><span class="onde">Grupo · Recife</span><p>Nação de maracatu de baque virado. O maracatu nação é patrimônio cultural do Brasil desde 2014.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Maracatu+Estrela+Brilhante+do+Recife" target="_blank" rel="noopener">Ver no mapa</a></li>
+        <li data-t="territorio" style="--c:var(--green)"><strong>Comunidade Xambá</strong><span class="onde">Território · Olinda</span><p>Comunidade tradicional de matriz africana, da nação Xambá, com tradições como o coco.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Terreiro+Xamb%C3%A1+Olinda" target="_blank" rel="noopener">Ver no mapa</a></li>
+        <li data-t="territorio" style="--c:var(--green)"><strong>Sítio de Pai Adão (Ilê Obá Ogunté)</strong><span class="onde">Território · Água Fria, Recife</span><p>O mais antigo espaço destinado ao candomblé em Pernambuco, fundado em 1875 e tombado pelo IPHAN em 2018.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=S%C3%ADtio+de+Pai+Ad%C3%A3o+Recife" target="_blank" rel="noopener">Ver no mapa</a></li>
+        <li data-t="grupo" style="--c:var(--sun)"><strong>Maracatu Nação Raízes de Pai Adão</strong><span class="onde">Grupo · Recife</span><p>Nação de maracatu ligada ao Sítio de Pai Adão.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Maracatu+Ra%C3%ADzes+de+Pai+Ad%C3%A3o+Recife" target="_blank" rel="noopener">Ver no mapa</a></li>
+      </ul>
+      <p class="nota">Estas são as primeiras indicações. O mapa cresce com a rede: conhece um grupo, um espaço ou um mestre ou mestra que precisa estar aqui? Conta pra gente.</p>
+      <a class="cta" href="https://www.instagram.com/agc.comunicacao" target="_blank" rel="noopener">Indicar um lugar</a>
+      <div><button class="soon" style="--c:var(--red);margin-top:18px" data-alvo="mapa-cultural">Fechar o mapa</button></div>
+    </article>
+    <article class="artigo" id="acervo-vivo" hidden style="box-shadow:6px 6px 0 var(--green)">
+      <h3>Acervo vivo</h3>
+      <p class="sub">Fotos, sons e vídeos que contam a história de quem faz cultura. É um acervo vivo porque nunca está pronto: cresce a cada registro.</p>
+      <p>Aqui ficam registros feitos com cuidado e com autorização de quem aparece. Cada item terá uma ficha: quem fez, onde, quando e sobre o quê. Assim a gente guarda a imagem e também o que ela quer dizer.</p>
+      <p><strong>Primeiros registros</strong></p>
+      <ul class="registros">
+        <li style="--c:var(--red)"><strong>Olhares do Cotidiano</strong><span class="onde">Fotografia · exposição digital</span><p>Exposição digital de fotografias de Joãozinho Xambá sobre cenas do dia a dia que costumam passar despercebidas.</p></li>
+        <li style="--c:var(--sun)"><strong>Duas Lentes, Duas Cidades</strong><span class="onde">Fotografia · conteúdo do Agenda da Cultura</span><p>Dois fotógrafos, Max Levay e Joãozinho Xambá, e dois jeitos de olhar o cotidiano.</p></li>
+        <li style="--c:var(--green)"><strong>Giras Memórias</strong><span class="onde">Cobertura fotográfica</span><p>Registro fotográfico feito pelo Agenda da Cultura.</p></li>
+        <li style="--c:var(--blue)"><strong>Liber-Arte</strong><span class="onde">Cobertura de espetáculo</span><p>Cobertura do espetáculo Liber-Arte feita pelo Agenda da Cultura.</p></li>
+        <li style="--c:var(--blue)"><strong>Alujá</strong><span class="onde">Áudio · toada do Sítio de Pai Adão · 42 segundos</span><audio controls preload="none" style="width:100%;margin-top:8px" src="/_blob/f21be0793311670f4a607065753018a3">Seu navegador não toca áudio.</audio><p>Registro de áudio de uma toada do Sítio de Pai Adão. Ficha em preenchimento.</p></li>
+      </ul>
+      <p><strong>Em destaque</strong></p>
+      <details class="reg"><summary>Sítio de Pai Adão<span class="onde">Memória · terreiro · Água Fria, Recife</span></summary>
+        <p>Mais de 150 anos de memória, fé e resistência em Água Fria, no Recife.</p>
+      <p>O Ilê Obá Ogunté, conhecido como Sítio de Pai Adão, fica em Água Fria, na zona norte do Recife. Fundado em 1875, é o mais antigo espaço destinado ao candomblé em Pernambuco e uma das casas de tradição nagô mais respeitadas do Brasil. A casa é consagrada a Iemanjá.</p>
+      <p>A história começa com Inês Joaquina da Costa, africana que chegou ao Brasil no século XIX, e segue com Felipe Sabino da Costa, o Pai Adão, que deu nome ao Sítio. Hoje, outros terreiros da mesma família nasceram dali e continuam ligados à casa-mãe.</p>
+      <p>Durante muito tempo, casas como essa foram perseguidas: na primeira metade do século XX, terreiros eram invadidos e objetos sagrados eram apreendidos. O Sítio resistiu e hoje é Patrimônio Cultural do Brasil, tombado pelo IPHAN em 2018. Antes disso, já era protegido em nível estadual, desde 1985.</p>
+      <p>O Sítio também é um espaço de convivência da comunidade, de formação cultural e de transmissão de saberes. Dele nasceu o Maracatu Nação Raízes de Pai Adão, e a Festa de Iemanjá é uma tradição da casa. Em 2025, o Sítio celebrou 150 anos de fundação e, em 2026, o Iphan anunciou investimento na restauração do memorial do terreiro.</p>
+      <div class="pensar" style="border-left-color:var(--blue)"><strong>Ao visitar, com respeito</strong>
+        <ul><li>O Sítio é um espaço religioso. Procure a casa e combine a visita antes.</li><li>Pergunte o que pode ser fotografado e filmado, e respeite o que for pedido.</li><li>Nunca divulgue imagens de rituais ou de pessoas sem autorização.</li></ul>
+      </div>
+      <p class="nota">Fontes: Diario de Pernambuco, Folha de Pernambuco e pesquisas acadêmicas da UFPE e da USP.</p>
+      </details>
+      <p class="nota">Vídeos: ainda não há registros por aqui. O primeiro pode ser o seu.</p>
+      <p>Quer ter uma história no acervo? Mande uma mensagem pelo Instagram do Agenda da Cultura. Antes, peça autorização a quem aparece e anote os dados da ficha.</p>
+      <a class="cta" href="https://www.instagram.com/agc.comunicacao" target="_blank" rel="noopener">Enviar um registro</a>
+      <div><button class="soon" style="--c:var(--green);margin-top:18px" data-alvo="acervo-vivo">Fechar o acervo</button></div>
+    </article>
+    <article class="artigo lab" id="laboratorio-criativo" hidden>
+      <h3>Laboratório criativo</h3>
+      <p class="sub">Aqui a gente experimenta. Monte um ritmo, crie uma estampa e deixe um algoritmo sugerir outras ideias.</p>
+      <p><strong>Ritmo Lab.</strong> Toque nos quadrados para ligar e desligar as batidas de cada instrumento. Depois aperte “Tocar”.</p>
+      <div id="seq"></div>
+      <div class="ctrl">
+        <button class="soon" id="lab-play" style="--c:var(--sun)">Tocar</button>
+        <button class="soon" id="lab-rand" style="--c:var(--red)">Gerar com algoritmo</button>
+        <button class="soon" id="lab-clr" style="--c:var(--blue)">Limpar</button>
+        <label>Velocidade <input type="range" id="lab-bpm" min="70" max="150" value="100" aria-label="Velocidade"></label>
+      </div>
+      <p class="nota">Os sons são criados no próprio aparelho e servem para experimentar padrões, não para reproduzir um ritmo tradicional. O botão “Gerar com algoritmo” sorteia quantas batidas cada instrumento terá e espalha as batidas do jeito mais uniforme possível. Esse tipo de padrão é chamado de ritmo euclidiano, e muitos ritmos tradicionais do mundo se parecem com ele.</p>
+      <hr>
+      <p><strong>Estamparia digital.</strong> Escolha uma forma e uma cor, toque nos quadrados para desenhar e veja a estampa se repetir.</p>
+      <div class="chips" id="est-formas" role="group" aria-label="Formas"></div>
+      <div class="chips" id="est-cores" role="group" aria-label="Cores"></div>
+      <div class="chips" id="est-extras" role="group" aria-label="Opções"></div>
+      <div class="est-grids"><div><p class="mini">Desenhe aqui</p><div class="est-edit" id="est-edit"></div></div><div><p class="mini">A estampa se repete</p><div id="est-prev"></div></div></div>
+      <p class="nota">Para guardar a sua estampa, tire um print da tela. Com “Espelhar” ligado, cada toque desenha nos quatro cantos ao mesmo tempo, e “Sortear” cria um desenho novo por regra, como um pequeno algoritmo.</p>
+      <hr>
+      <p><strong>Desafios para fazer em grupo</strong></p>
+      <ol>
+        <li>Crie um ritmo de 16 batidas e dê um nome a ele.</li>
+        <li>Fotografe um padrão da sua rua, como grades, azulejos ou bandeirinhas, e redesenhe no papel ou no computador.</li>
+        <li>Grave 1 minuto dos sons da sua rua, com autorização de quem aparece ou fala, e monte com a turma uma paisagem sonora.</li>
+      </ol>
+      <a class="cta" href="https://www.instagram.com/agc.comunicacao" target="_blank" rel="noopener">Mostrar minha criação</a>
+      <div><button class="soon" style="--c:var(--sun);margin-top:18px" data-alvo="laboratorio-criativo">Fechar o laboratório</button></div>
+    </article>
+  </div>
+</section>
+
+<section id="fotografia">
+  <div class="wrap">
+    <h2>Fotografia pernambucana</h2>
+    <p class="lead">Olhares de quem registra Pernambuco e a sua cultura.</p>
+    <div class="grid">
+      <article class="card" style="--c:var(--green)"><h3>Max Levay</h3><p>Fotógrafo pernambucano com 25 anos de trajetória. Idealizou uma imersão fotográfica gratuita em Serra Negra, com o Coletivo Cenas Assinadas, para olhar o cotidiano de um território por dentro.</p></article>
+      <article class="card" style="--c:var(--sun)"><h3>João Veras (Joãozinho Xambá)</h3><p>Artista cultural e fotógrafo, atua com música, educação popular e audiovisual. Foi aprovado como fotógrafo na galeria Design I Art, em Florianópolis, e integra o coletivo Erê Sankofa.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="participe">
+  <div class="wrap">
+    <h2>Participe</h2>
+    <p class="lead">Tem uma ideia, um projeto ou quer fazer parte da rede? Mande uma mensagem pelo Instagram do Agenda da Cultura.</p>
+    <a class="cta" href="https://www.instagram.com/agc.comunicacao" target="_blank" rel="noopener">Enviar uma ideia pelo Instagram</a>
+  </div>
+</section>
+</main>
+
+<div class="flags" aria-hidden="true"></div>
+<footer><p>Maracatech: cultura e tecnologia lado a lado. Uma plataforma do Agenda da Cultura.</p></footer>
+
+<script>
+(function(){
+  var cores=["--red","--sun","--green","--blue","--pink"];
+  document.querySelectorAll(".flags").forEach(function(f){
+    for(var i=0;i<60;i++){var s=document.createElement("i");s.style.background="var("+cores[i%5]+")";f.appendChild(s);}
+  });
+})();
+(function(){
+  function estado(id,abrir){
+    document.getElementById(id).hidden=!abrir;
+    document.querySelectorAll('[data-alvo="'+id+'"][aria-expanded]').forEach(function(t){
+      t.setAttribute("aria-expanded",String(abrir));
+      t.textContent=abrir?(t.getAttribute("data-fechar")||"Fechar texto"):(t.getAttribute("data-abrir")||"Ler agora");
+    });
+  }
+  document.querySelectorAll("[data-alvo]").forEach(function(b){
+    b.addEventListener("click",function(){
+      var id=b.getAttribute("data-alvo"),a=document.getElementById(id),abrir=a.hidden;
+      document.querySelectorAll(".artigo").forEach(function(x){estado(x.id,false);});
+      estado(id,abrir);
+      var alvo=abrir?a:document.querySelector('[data-alvo="'+id+'"][aria-expanded]');
+      if(alvo){alvo.scrollIntoView({block:abrir?"start":"center"});}
+    });
+  });
+})();
+(function(){
+  var chips=document.querySelectorAll(".chip");
+  chips.forEach(function(c){
+    c.addEventListener("click",function(){
+      var f=c.getAttribute("data-f");
+      chips.forEach(function(x){x.classList.toggle("on",x===c);x.setAttribute("aria-pressed",String(x===c));});
+      document.querySelectorAll(".lugares li").forEach(function(li){li.hidden=!(f==="todos"||li.getAttribute("data-t")===f);});
+    });
+  });
+})();
+(function(){
+  var N=16,rows=[["Alfaia","grave","--red"],["Caixa","seca","--sun"],["Gonguê","metal","--blue"]];
+  var pat=rows.map(function(){return new Array(N).fill(false);});
+  [0,4,8,12].forEach(function(i){pat[0][i]=true;});
+  [2,6,10,14].forEach(function(i){pat[1][i]=true;});
+  [0,3,6,10,13].forEach(function(i){pat[2][i]=true;});
+  var box=document.getElementById("seq"),art=document.getElementById("laboratorio-criativo"),pads=[];
+  var playBtn=document.getElementById("lab-play"),bpmEl=document.getElementById("lab-bpm");
+  rows.forEach(function(r,ri){
+    var row=document.createElement("div");row.className="seqrow";
+    row.innerHTML="<b>"+r[0]+" <span>"+r[1]+"</span></b>";
+    var g=document.createElement("div");g.className="pads";pads[ri]=[];
+    for(var i=0;i<N;i++){(function(i){
+      var b=document.createElement("button");b.type="button";b.className="pad";b.style.setProperty("--c","var("+r[2]+")");
+      b.setAttribute("aria-label",r[0]+", tempo "+(i+1));
+      b.addEventListener("click",function(){pat[ri][i]=!pat[ri][i];draw();});
+      g.appendChild(b);pads[ri][i]=b;})(i);}
+    row.appendChild(g);box.appendChild(row);
+  });
+  function draw(){pads.forEach(function(r,ri){r.forEach(function(b,i){b.setAttribute("aria-pressed",String(pat[ri][i]));});});}
+  draw();
+  function clearNow(){pads.forEach(function(r){r.forEach(function(b){b.classList.remove("now");});});}
+  var ctx=null,nb=null,playing=false,step=0,next=0,timer=null;
+  function ac(){
+    if(!ctx){var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;ctx=new C();
+      nb=ctx.createBuffer(1,Math.floor(ctx.sampleRate*0.12),ctx.sampleRate);var d=nb.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1;}
+    if(ctx.state==="suspended")ctx.resume();return ctx;
+  }
+  function hit(r,t){
+    var g=ctx.createGain();g.connect(ctx.destination);
+    if(r===0){var o=ctx.createOscillator();o.frequency.setValueAtTime(130,t);o.frequency.exponentialRampToValueAtTime(48,t+.22);
+      g.gain.setValueAtTime(.95,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.connect(g);o.start(t);o.stop(t+.32);}
+    else if(r===1){var s=ctx.createBufferSource();s.buffer=nb;var f=ctx.createBiquadFilter();f.type="highpass";f.frequency.value=1800;
+      g.gain.setValueAtTime(.55,t);g.gain.exponentialRampToValueAtTime(.001,t+.09);s.connect(f);f.connect(g);s.start(t);s.stop(t+.1);}
+    else{g.gain.setValueAtTime(.3,t);g.gain.exponentialRampToValueAtTime(.001,t+.22);
+      [640,960].forEach(function(fr){var o=ctx.createOscillator();o.type="triangle";o.frequency.value=fr;o.connect(g);o.start(t);o.stop(t+.24);});}
+  }
+  function mark(s,t){setTimeout(function(){if(!playing)return;clearNow();pads.forEach(function(r){r[s].classList.add("now");});},Math.max(0,(t-ctx.currentTime)*1000));}
+  function tick(){while(next<ctx.currentTime+0.12){var s=step,t=next;
+    for(var r=0;r<rows.length;r++){if(pat[r][s])hit(r,t);}
+    mark(s,t);next+=60/(+bpmEl.value)/4;step=(step+1)%N;}}
+  function stop(){playing=false;clearInterval(timer);clearNow();playBtn.textContent="Tocar";}
+  playBtn.addEventListener("click",function(){
+    if(playing){stop();return;}
+    if(!ac())return;
+    playing=true;step=0;next=ctx.currentTime+.05;timer=setInterval(tick,25);playBtn.textContent="Parar";
+  });
+  document.getElementById("lab-clr").addEventListener("click",function(){pat=rows.map(function(){return new Array(N).fill(false);});draw();});
+  document.getElementById("lab-rand").addEventListener("click",function(){
+    var ks=[[3,5],[5,9],[3,7]];
+    pat=rows.map(function(_,ri){var k=ks[ri][0]+Math.floor(Math.random()*(ks[ri][1]-ks[ri][0]+1)),rot=Math.floor(Math.random()*N),a=[];
+      for(var i=0;i<N;i++){a.push(((i+rot)*k)%N<k);}return a;});
+    draw();
+  });
+  new MutationObserver(function(){if(art.hidden)stop();}).observe(art,{attributes:true,attributeFilter:["hidden"]});
+})();
+(function(){
+  var M=5,$=function(i){return document.getElementById(i);};
+  var COR=[['#F58220','Laranja'],['#FFC72C','Amarelo'],['#1A1A1A','Preto'],['#FFF4E3','Creme']];
+  var FORMAS=[['asterisco','Asterisco'],['losango','Losango'],['circulo','Círculo'],['quadrado','Quadrado'],['risco','Riscos'],['','Apagar']];
+  var SH={
+    circulo:`<circle cx='50' cy='50' r='30' stroke='none'/>`,
+    losango:`<polygon points='50,14 86,50 50,86 14,50' stroke='none'/>`,
+    quadrado:`<rect x='22' y='22' width='56' height='56' stroke='none'/>`,
+    risco:`<path d='M12 56L56 12M28 72L72 28M44 88L88 44' fill='none' stroke-width='9'/>`,
+    asterisco:`<path d='M50 12V88M12 50H88M23 23L77 77M77 23L23 77' fill='none' stroke-width='11'/>`
+  };
+  var cur={s:'asterisco',c:COR[0][0]},bg=COR[3][0],mirror=true,grid=[],btns=[],fB=[],cB=[],bB=[],mir;
+  function vazio(){return {s:'',c:''};}
+  for(var i=0;i<M*M;i++)grid.push(vazio());
+  function put(x,y,v){grid[y*M+x]=(v&&v.s)?{s:v.s,c:v.c}:vazio();}
+  function put4(x,y,v){put(x,y,v);put(M-1-x,y,v);put(x,M-1-y,v);put(M-1-x,M-1-y,v);}
+  function cel(c,x,y){return c.s?`<g transform='translate(${x*100} ${y*100})' fill='${c.c}' stroke='${c.c}'>${SH[c.s]}</g>`:'';}
+  function render(){
+    for(var y=0;y<M;y++)for(var x=0;x<M;x++){
+      btns[y*M+x].innerHTML=`<svg viewBox='0 0 100 100' aria-hidden='true'><rect width='100' height='100' fill='${bg}'/>${cel(grid[y*M+x],0,0)}</svg>`;}
+    var n=M*3,s=`<svg viewBox='0 0 ${n*100} ${n*100}' role='img' aria-label='Sua estampa repetida'><rect width='${n*100}' height='${n*100}' fill='${bg}'/>`;
+    for(var ty=0;ty<n;ty++)for(var tx=0;tx<n;tx++)s+=cel(grid[(ty%M)*M+(tx%M)],tx,ty);
+    $('est-prev').innerHTML=s+'</svg>';
+  }
+  function marks(){
+    fB.forEach(function(o){o.b.setAttribute('aria-pressed',String(o.v===cur.s));});
+    cB.forEach(function(o){o.b.setAttribute('aria-pressed',String(o.v===cur.c));});
+    bB.forEach(function(o){o.b.setAttribute('aria-pressed',String(o.v===bg));});
+    mir.setAttribute('aria-pressed',String(mirror));
+  }
+  function chip(p,t,fn){var b=document.createElement('button');b.type='button';b.className='ech';b.textContent=t;b.addEventListener('click',fn);p.appendChild(b);return b;}
+  var elF=$('est-formas'),elC=$('est-cores'),elX=$('est-extras'),elE=$('est-edit');
+  FORMAS.forEach(function(f){fB.push({v:f[0],b:chip(elF,f[1],function(){cur.s=f[0];marks();})});});
+  COR.forEach(function(c){var b=chip(elC,'',function(){cur.c=c[0];marks();});b.className='ech sw';b.style.background=c[0];b.setAttribute('aria-label',c[1]);cB.push({v:c[0],b:b});});
+  [['#FFF4E3','Fundo creme'],['#1A1A1A','Fundo preto']].forEach(function(f){bB.push({v:f[0],b:chip(elX,f[1],function(){bg=f[0];marks();render();})});});
+  mir=chip(elX,'Espelhar',function(){mirror=!mirror;marks();});
+  chip(elX,'Sortear',function(){
+    var F=['circulo','losango','quadrado','risco','asterisco','',''],C=COR.map(function(c){return c[0];}).filter(function(c){return c!==bg;});
+    function pick(a){return a[Math.floor(Math.random()*a.length)];}
+    for(var y=0;y<3;y++)for(var x=0;x<3;x++){put4(x,y,{s:pick(F),c:pick(C)});}
+    render();
+  });
+  chip(elX,'Limpar',function(){grid=grid.map(vazio);render();});
+  for(var k=0;k<M*M;k++)(function(k){
+    var b=document.createElement('button');b.type='button';b.className='estc';
+    b.setAttribute('aria-label','Quadrado, linha '+(Math.floor(k/M)+1)+', coluna '+(k%M+1));
+    b.addEventListener('click',function(){var x=k%M,y=Math.floor(k/M),v=cur.s?cur:null;if(mirror)put4(x,y,v);else put(x,y,v);render();});
+    elE.appendChild(b);btns.push(b);
+  })(k);
+  put4(0,0,{s:'losango',c:COR[1][0]});put4(2,0,{s:'circulo',c:COR[0][0]});put4(0,2,{s:'circulo',c:COR[0][0]});put(2,2,{s:'asterisco',c:COR[0][0]});
+  marks();render();
+})();
+(function(){
+  var d=document.getElementById('destaque-lab');
+  if(!d)return;
+  d.addEventListener('click',function(){
+    var a=document.getElementById('laboratorio-criativo');
+    if(a.hidden){document.querySelector('[data-alvo="laboratorio-criativo"][aria-expanded]').click();}
+    else{a.scrollIntoView();}
+  });
+})();
+</script>
+</body>
+</html>
